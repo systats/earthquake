@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>index.utf8</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Simon Roth" />
+    <meta name="date" content="2019-06-12" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/semantic-range/range.css" rel="stylesheet" />
+    <script src="libs/semantic-range/range.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: inverse
+&lt;!-- , center, middle --&gt;
+
+&lt;head&gt;
+  &lt;link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.0/semantic.css"&gt;
+  &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.2/jquery.js"&gt;&lt;/script&gt;
+	&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.0/semantic.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+
+
+
+
+&lt;!--&lt;style&gt;
+.remark-slide-content &gt; h1 {
+  font-size: 40px;
+}
+.remark-slide-content &gt; h2 {
+  font-size: 30px;
+}
+.remark-slide-content &gt; h3 {
+  font-size: 20px;
+}
+&lt;/style&gt;--&gt;
+
+&lt;!-- &lt;img class = "ui medium image" src = "images/unistuttgart.png"&gt; --&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;h1 class = "ui inverted header" style = "font-size:40px"&gt;
+    From Twitter to Ballot
+  &lt;div class = "sub header" style = "font-size:25px"&gt;
+    Using neural networks to estimate voting behavior
+    &lt;!-- &lt;i class = "inverted users icon"&gt;&lt;/i&gt;&lt;i class = "edit outline icon"&gt;&lt;/i&gt;  --&gt;
+  &lt;/div&gt;
+&lt;/h1&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;i&gt;CDM&lt;/i&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;div class = "ui middle aligned centered  grid"&gt;
+&lt;div class = "three wide column"&gt;
+  &lt;h3 class = "ui inverted header"&gt;
+  Sascha Göbel
+  &lt;div class = "sub header"&gt;
+  GSDS
+  &lt;/div&gt;
+  &lt;/h3&gt;
+&lt;/div&gt;
+&lt;div class = "three wide column"&gt;
+  &lt;h3 class = "ui inverted header"&gt;
+  Simon Roth
+  &lt;div class = "sub header"&gt;
+  GSDS
+  &lt;/div&gt;
+  &lt;/h3&gt;
+&lt;/div&gt;
+&lt;div class = "six wide column"&gt;
+  &lt;div align="center"&gt;
+  &lt;a href="https://twitter.com/systatz" target="_blank" rel="nofollow" class = "ui circular twitter icon button"&gt;
+  &lt;i class="twitter icon"&gt;&lt;/i&gt;
+  &lt;/a&gt;
+  &lt;a href="https://github.com/systats" target="_blank" rel="nofollow" class = "ui circular github icon button"&gt;
+  &lt;i class="github icon"&gt;&lt;/i&gt;
+  &lt;/a&gt;
+  &lt;a href="mailto:sy-ro[at]gmx[dot]net" rel="nofollow" class = "ui circular mail icon button"&gt;
+  &lt;i class="mail icon"&gt;&lt;/i&gt;
+  &lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class = "four wide column"&gt;
+  2019-06-12
+&lt;/div&gt;
+&lt;/div&gt;
+
+
+---
+
+### Predicting Political Behavior
+
+&gt; Does online communication reflect voting behavior?
+
+
+&lt;strong&gt;1. Participation studies&lt;/strong&gt;
+
+* Usually focus on interpersonal networks and how they affect political engagement (e.g., Baek, 2009; Huckfeldt and Sprague, 1995; Jost et al., 2018; Lupton and Thornton, 2017; McClurg, 2006; Sotirovic and McLeod, 2001)
+* More generally investigate the determinants and conditions of participation in political communication (e.g., Broockman, 2014; Broockman and Ryan, 2017; Jacobs, Cook and Carpini, 2009; Davis, 2005). 
+
+&lt;strong&gt;2. Technical studies&lt;/strong&gt;
+
+* Infer individual charcteristics by social media activity and content 
+* Most of these studies focus on political actors rather than citizens
+    &lt;!-- + voters (Barberá, 2015) --&gt;
+    + elites (Lowe et al., 2015) 
+    + political positions, aggregate public opinion (Beauchamp, 2017)
+    + election outcomes (Lopez et al., 2018)
+    + elite values (Jones et al., 2018)
+    + politicial sophistication (Benoit et al., 2019). 
+
+&lt;!-- This reveals a research gap as concerns the relationship between citizens' actual (political) communication and political participation. --&gt;
+
+&lt;!-- * Why? Citizens communication is expansiv to label for supervised machine learning --&gt;
+
+&gt; Does twitter enable us to predict citizens' individual voting behavior?
+
+&lt;!-- &lt;strong&gt;Guiding Question&lt;/strong&gt; --&gt;
+
+&lt;!-- &gt; Does twitter enable us to predict **citizens' individual** voting behavior? --&gt;
+
+&lt;!-- * Public voter registrations files and public social media commentary --&gt;
+&lt;!-- * Massive volumn of data (training on 1.5 Mio tweets) --&gt;
+&lt;!-- * State of the art sequence language models  --&gt;
+
+---
+
+### Data &amp; Measurement
+
+.pull-left[
+
+* Integration of public voter registration files with Twitter accounts (by email)
+* ca. 90000 registered voters matched from Florida
+* Sample approximates population characteristics very well (according to ACS and PUMS)
+
+
+&lt;div class = "ui small header"&gt;
+  Voting propensity
+&lt;/div&gt;
+
+* Person specific voting tendency 
+* IRT of past elections (2006-2018)
+&lt;!-- * Range [-2 , 2]. --&gt;
+* forthcoming: individual election turnout (binary)
+
+&lt;div class = "ui small header"&gt;
+  Party affiliation
+&lt;/div&gt;
+
+* Public primary party registration 
+&lt;!-- * Range [D = 0; R = 1]. --&gt;
+* Rare strategic crossover voting &lt;a name=cite-alvarez1997analysis&gt;&lt;/a&gt;([Alvarez and Nagler, 1997](#bib-alvarez1997analysis)) 
+* More relevant to open primaries (Florida is closed and record is public)
+
+]
+
+.pull-right[
+
+  ![](images/sample.png)
+  
+]
+
+
+---
+class: inverse, center, middle
+
+### Natural Language Processing
+
+---
+
+### Bag of Words
+
+.pull-left[
+
+* Document term matrix (DTM)
+* One hot encoding
+    + Dummy for each word 
+    + binary or count vectors
+* Statistical assumptions
+    + independence
+    + exchangability
+    
+]
+
+.pull-right[
+
+&lt;table class="table table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Sample Data  &lt;br&gt;&lt;br&gt;
+&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; doc_id &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; text &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; academia is live long learning &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; academia means freedom &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; academia can be rough &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+
+&lt;br&gt;
+
+&lt;table class="table table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Document Termn Matrix (Binary or Count)  &lt;br&gt;&lt;br&gt;
+&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; academia &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; be &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; can &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; freedom &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; is &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; learning &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; live &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; long &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; means &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; rough &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;br&gt;
+
+&lt;strong&gt;Limitations&lt;/strong&gt;
+
+* Neither context information nor word order matter
+* Curse of high-dimensionality
+* Sparsity (99% of cells are 0)
+* Big data limitation due to size of `\([N \times w_i]\)`
+* Prediction model has its own constraints
+
+---
+
+&lt;div class = "ui header" &gt;
+  N-Grams
+&lt;/div&gt;
+
+* instead of single words (uni-gram), word cooccurances of n-th order are **counted** 
+    + bigrams `\(:= [w_i, w_{i+1}]\)`
+    + trigrams `\(:= [w_{i-1}, w_i, w_{i+1}]\)`
+    + n-grams `\(:= [w_{i-n/2}, w_i, w_{i+n/2}]\)`
+* captures some local context but increases dimenionality
+
+&lt;table class="table table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; academia can &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; academia is &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; academia means &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; be rough &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; can be &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; is live &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; live long &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; long learning &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; means freedom &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;br&gt;
+--
+
+&lt;div class = "ui header" &gt;
+  TF-IDF
+&lt;/div&gt;
+
+* weighs a term’s frequency (TF) by its inverse document frequency (IDF). 
+* common words are down weighted whereas rare words are upvoted
+* `\(w_{t,d} = TF_{t, d} \text{ log } \frac{N}{DF_t}\)`
+
+&lt;table class="table table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; academia &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; be &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; can &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; freedom &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; is &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; learning &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; live &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; long &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; means &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; rough &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0.22 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0.22 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0.22 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0.22 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0.00 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0.37 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0.37 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0.00 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0.27 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0.27 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 0.27 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+### Memory Constraints
+
+&lt;img src="index_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+
+&lt;strong&gt; Sample Size N&lt;/strong&gt;
+
+* 1.5 mio tweets (and even more)
+* batching/stacking
+
+&lt;strong&gt; Number of columns&lt;/strong&gt;
+
+* Mature humans have a vocabluary capacity of 20-40 thousends words.
+* DTMs usually have 2-10 thousends word columns.
+
+&lt;strong&gt;How to scale?&lt;/strong&gt; sequence models can meomorise 10-500 tausend words. 
+
+---
+
+### Sequences
+
+
+.pull-left[
+
+* Each word is replaced by its index 
+* Fixed input length (pad/truncate)
+* A sequence of integer tokens
+* Much more efficient [N, seq_len]
+    
+&lt;br&gt;
+    
+First a vocabluary dictionary
+
+&lt;table class="table table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Sample Data  &lt;br&gt;&lt;br&gt;
+&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; index &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; word &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; n &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; academia &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; is &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; live &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; long &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; learning &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; means &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; freedom &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; can &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; be &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; rough &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+
+.pull-right[
+
+&lt;table class="table table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Sample Data  &lt;br&gt;&lt;br&gt;
+&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; doc_id &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; text &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; academia is live long learning &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; academia means freedom &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;color: green !important;"&gt; academia can be rough &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+&lt;br&gt;
+
+Then tokenize given texts
+
+
+```
+## [[1]]
+## [1] 1 2 3 4 5
+## 
+## [[2]]
+## [1] 1 6 7
+## 
+## [[3]]
+## [1] 1 8 9
+```
+
+and padding to get fixed size input
+
+
+```
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    2    3    4    5
+## [2,]    0    0    1    6    7
+## [3,]    0    0    1    8    9
+```
+
+]
+
+---
+
+### Neural Networks
+
+&lt;div class = "ui small header"&gt; Embeddings&lt;/div&gt;
+
+&lt;img class="ui right floated small image" src = "images/word2vec.png"&gt;
+
+
+* word2vec &lt;a name=cite-mikolov2013efficient&gt;&lt;/a&gt;([Mikolov, Chen, Corrado, and Dean, 2013](#bib-mikolov2013efficient))
+* Dense represenation of discrete voacb.
+* Nowadays integrated + optimized by global loss.
+
+
+&lt;div class = "ui small header"&gt; Recurrent Neural Network (RNN)&lt;/div&gt;
+
+&lt;img class="ui right floated medium image" src = "images/rnn.jpg"&gt;
+
+
+* Learns arbitrarily long sequential patterns
+* Can be performed bidirectional
+* Able to forget noisy fetaures
+* Extensions: 
+    + long short-term memory (LSTM) and 
+    + gated recurrent unit (GRU)
+
+
+&lt;div class = "ui small header"&gt;Convolutional Neural Network (CNN)&lt;/div&gt;
+
+
+&lt;img class="ui right floated medium image" src = "images/cnn.png"&gt;
+
+
+* From computer vision
+* 1D CNN for text 
+    + &lt;a name=cite-kalchbrenner2014convolutional&gt;&lt;/a&gt;([Kalchbrenner, Grefenstette, and Blunsom, 2014](#bib-kalchbrenner2014convolutional)) 
+    + &lt;a name=cite-kim2014convolutional&gt;&lt;/a&gt;([Kim, 2014](#bib-kim2014convolutional))
+* Interprets each token as real valued pixel
+* Local adaptive filters are pooling the spatial dependcies of words (1D)
+* Can be parallelized (speed up)
+
+---
+
+class: inverse, center, middle
+
+### Experiments
+
+
+---
+
+### Benchmarks I
+
+* Predict party affiliation and voting propensity based on socio-demographic data
+* Outcomes (colored) are used mutually as covariates
+* Predictive model: Boosted trees (Xgboost)
+* Baseline to compare against text based models
+
+
+&lt;table class="table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Feature Matrix &lt;br&gt;&lt;br&gt;
+&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; theta &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; party &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; age &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; gender &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; race_asian &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; race_black &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; race_hispanic &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; race_multi &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; race_other &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; race_white &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; -1.38 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 31.92 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 1.48 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 55.87 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0.95 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 74.09 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; -0.67 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 46.29 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; -1.41 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 20.56 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;br&gt;
+
+
+
+.pull-left[
+
+&lt;img src="index_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="index_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+### Benchmark II
+
+* Bag of words models
+* 
+
+---
+
+### Genetic Optimization
+
+* superior to random search or grid search
+* out of sample train/validation/test split (.8/.1/.1)
+
+&lt;img src="index_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="index_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Voting Propensity
+
+
+
+
+.pull-left[
+
+&lt;strong&gt;Best&lt;/strong&gt; model is a cnn_lstm with out of sample test performance of
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; metric &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mse &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.516 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; rmse &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.718 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mae &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.564 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+
+.pull-right[
+
+
+&lt;img src="index_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+
+]
+
+&lt;br&gt;
+
+&lt;img src="index_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Party Affiliation
+
+
+
+&lt;div class = "ui two column compact grid"&gt;
+  &lt;div class = "row"&gt;
+  &lt;div class = "column"&gt;
+
+&lt;strong&gt;Best&lt;/strong&gt; model is a multi_cnn with out of sample test performance of
+
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; metric &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; ll &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.162 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; precision &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.801 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; recall &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.673 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; accuracy &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.801 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class = "row"&gt;
+  &lt;div class = "column"&gt;
+  
+&lt;img class = "ui  image" src = "images/b_con.png"&gt;
+
+&lt;/div&gt;
+&lt;div class = "column"&gt;
+    
+&lt;img class = "ui  image" src = "images/b_roc.png"&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+
+---
+
+### Adversarial Examples
+
+* Which features are most predictive for &lt;strong&gt;party&lt;/strong&gt; affiliation? [dem = 0, rep = 1]
+* Qualitatively sampled
+
+
+
+<body style="min-height: 611px;">
+<div class="wrapper">
+<div class="ui grid">
+<div class="three wide column">
+<div class="ui blue right aligned label" data-content="True Label">dem</div>
+<div class="ui basic blue right aligned label" data-content="Predicted Probability">0.35</div>
+</div>
+<div class="twelve wide column">
+<span>
+<span style="background-color:#AFAFFF; color: #000000font-size:8pt; line-height: 1.1">washington </span>
+<span style="background-color:#7676FF; color: #121212font-size:8pt; line-height: 1.1">stop </span>
+<span style="background-color:#1E1EFF; color: #C1C1C1font-size:8pt; line-height: 1.1">racially </span>
+<span style="background-color:#0A0AFF; color: #EAEAEAfont-size:8pt; line-height: 1.1">profil </span>
+<span style="background-color:#0A0AFF; color: #EAEAEAfont-size:8pt; line-height: 1.1">latinx </span>
+<span style="background-color:#1414FF; color: #D5D5D5font-size:8pt; line-height: 1.1">american </span>
+<span style="background-color:#1414FF; color: #D5D5D5font-size:8pt; line-height: 1.1">citizen </span>
+<span style="background-color:#E2E2FF; color: #000000font-size:8pt; line-height: 1.1">for </span>
+<span style="background-color:#AFAFFF; color: #000000font-size:8pt; line-height: 1.1">passport </span>
+<span style="background-color:#9F9FFF; color: #000000font-size:8pt; line-height: 1.1">denial </span>
+</span>
+</div>
+<div class="three wide column">
+<div class="ui blue right aligned label" data-content="True Label">dem</div>
+<div class="ui basic blue right aligned label" data-content="Predicted Probability">0.38</div>
+</div>
+<div class="twelve wide column">
+<span>
+<span style="background-color:#BEBEFF; color: #000000font-size:8pt; line-height: 1.1">support </span>
+<span style="background-color:#B9B9FF; color: #000000font-size:8pt; line-height: 1.1">christine </span>
+<span style="background-color:#7B7BFF; color: #070707font-size:8pt; line-height: 1.1">blasey </span>
+<span style="background-color:#1919FF; color: #CBCBCBfont-size:8pt; line-height: 1.1">ford </span>
+<span style="background-color:#1919FF; color: #CBCBCBfont-size:8pt; line-height: 1.1">believesurvivors </span>
+<span style="background-color:#3333FF; color: #979797font-size:8pt; line-height: 1.1">stopkavanaugh </span>
+<span style="background-color:#0000FF; color: #FFFFFFfont-size:8pt; line-height: 1.1">do </span>
+<span style="background-color:#0F0FFF; color: #E0E0E0font-size:8pt; line-height: 1.1">not </span>
+<span style="background-color:#B4B4FF; color: #000000font-size:8pt; line-height: 1.1">promote </span>
+<span style="background-color:#B9B9FF; color: #000000font-size:8pt; line-height: 1.1">kavanaugh </span>
+<span style="background-color:#B9B9FF; color: #000000font-size:8pt; line-height: 1.1">impeach </span>
+<span style="background-color:#9595FF; color: #000000font-size:8pt; line-height: 1.1">him </span>
+</span>
+</div>
+<div class="three wide column">
+<div class="ui blue right aligned label" data-content="True Label">dem</div>
+<div class="ui basic blue right aligned label" data-content="Predicted Probability">0.41</div>
+</div>
+<div class="twelve wide column">
+<span>
+<span style="background-color:#CECEFF; color: #000000font-size:8pt; line-height: 1.1">let </span>
+<span style="background-color:#E7E7FF; color: #000000font-size:8pt; line-height: 1.1">s </span>
+<span style="background-color:#E7E7FF; color: #000000font-size:8pt; line-height: 1.1">eliminate </span>
+<span style="background-color:#E7E7FF; color: #000000font-size:8pt; line-height: 1.1">columbus </span>
+<span style="background-color:#FFBEBE; color: #000000font-size:8pt; line-height: 1.1">day </span>
+<span style="background-color:#FFFCFC; color: #000000font-size:8pt; line-height: 1.1">as </span>
+<span style="background-color:#FFCECE; color: #000000font-size:8pt; line-height: 1.1">a </span>
+<span style="background-color:#FFCECE; color: #000000font-size:8pt; line-height: 1.1">national </span>
+<span style="background-color:#FFCECE; color: #000000font-size:8pt; line-height: 1.1">holiday </span>
+<span style="background-color:#FFCECE; color: #000000font-size:8pt; line-height: 1.1">instead </span>
+<span style="background-color:#F7F7FF; color: #000000font-size:8pt; line-height: 1.1">make </span>
+<span style="background-color:#DDDDFF; color: #000000font-size:8pt; line-height: 1.1">election </span>
+<span style="background-color:#F2F2FF; color: #000000font-size:8pt; line-height: 1.1">day </span>
+<span style="background-color:#FFE2E2; color: #000000font-size:8pt; line-height: 1.1">a </span>
+<span style="background-color:#FFBEBE; color: #000000font-size:8pt; line-height: 1.1">national </span>
+<span style="background-color:#FFC3C3; color: #000000font-size:8pt; line-height: 1.1">holiday </span>
+<span style="background-color:#FFBEBE; color: #000000font-size:8pt; line-height: 1.1">close </span>
+<span style="background-color:#FFE7E7; color: #000000font-size:8pt; line-height: 1.1">the </span>
+<span style="background-color:#FFFCFC; color: #000000font-size:8pt; line-height: 1.1">bank </span>
+<span style="background-color:#FCFCFF; color: #000000font-size:8pt; line-height: 1.1">close </span>
+<span style="background-color:#E2E2FF; color: #000000font-size:8pt; line-height: 1.1">the </span>
+<span style="background-color:#DDDDFF; color: #000000font-size:8pt; line-height: 1.1">school </span>
+<span style="background-color:#C8C8FF; color: #000000font-size:8pt; line-height: 1.1">and </span>
+<span style="background-color:#9F9FFF; color: #000000font-size:8pt; line-height: 1.1">make </span>
+<span style="background-color:#9F9FFF; color: #000000font-size:8pt; line-height: 1.1">it </span>
+<span style="background-color:#9F9FFF; color: #000000font-size:8pt; line-height: 1.1">so </span>
+<span style="background-color:#9F9FFF; color: #000000font-size:8pt; line-height: 1.1">that </span>
+<span style="background-color:#BEBEFF; color: #000000font-size:8pt; line-height: 1.1">people </span>
+<span style="background-color:#B9B9FF; color: #000000font-size:8pt; line-height: 1.1">can </span>
+<span style="background-color:#B9B9FF; color: #000000font-size:8pt; line-height: 1.1">more </span>
+<span style="background-color:#B9B9FF; color: #000000font-size:8pt; line-height: 1.1">easily </span>
+<span style="background-color:#8585FF; color: #000000font-size:8pt; line-height: 1.1">make </span>
+<span style="background-color:#8585FF; color: #000000font-size:8pt; line-height: 1.1">they </span>
+<span style="background-color:#8585FF; color: #000000font-size:8pt; line-height: 1.1">voice </span>
+<span style="background-color:#7171FF; color: #1C1C1Cfont-size:8pt; line-height: 1.1">hear </span>
+<span style="background-color:#8080FF; color: #000000font-size:8pt; line-height: 1.1">at </span>
+<span style="background-color:#E2E2FF; color: #000000font-size:8pt; line-height: 1.1">the </span>
+<span style="background-color:#E2E2FF; color: #000000font-size:8pt; line-height: 1.1">poll </span>
+</span>
+</div>
+<div class="three wide column">
+<div class="ui red right aligned label" data-content="True Label">rep</div>
+<div class="ui red basic right aligned label" data-content="Predicted Probability">0.29</div>
+</div>
+<div class="twelve wide column">
+<span>
+<span style="background-color:#9090FF; color: #000000font-size:8pt; line-height: 1.1">republicans </span>
+<span style="background-color:#9090FF; color: #000000font-size:8pt; line-height: 1.1">do </span>
+<span style="background-color:#8585FF; color: #000000font-size:8pt; line-height: 1.1">not </span>
+<span style="background-color:#C3C3FF; color: #000000font-size:8pt; line-height: 1.1">believe </span>
+<span style="background-color:#C3C3FF; color: #000000font-size:8pt; line-height: 1.1">ban </span>
+<span style="background-color:#B4B4FF; color: #000000font-size:8pt; line-height: 1.1">gun </span>
+<span style="background-color:#7676FF; color: #121212font-size:8pt; line-height: 1.1">will </span>
+<span style="background-color:#6C6CFF; color: #262626font-size:8pt; line-height: 1.1">stop </span>
+<span style="background-color:#7676FF; color: #121212font-size:8pt; line-height: 1.1">violence </span>
+<span style="background-color:#7676FF; color: #121212font-size:8pt; line-height: 1.1">but </span>
+<span style="background-color:#6767FF; color: #303030font-size:8pt; line-height: 1.1">somehow </span>
+<span style="background-color:#FCFCFF; color: #000000font-size:8pt; line-height: 1.1">believe </span>
+<span style="background-color:#FFC3C3; color: #000000font-size:8pt; line-height: 1.1">that </span>
+<span style="background-color:#FFECEC; color: #000000font-size:8pt; line-height: 1.1">ban </span>
+<span style="background-color:#F7F7FF; color: #000000font-size:8pt; line-height: 1.1">abortion </span>
+<span style="background-color:#FFFCFC; color: #000000font-size:8pt; line-height: 1.1">will </span>
+<span style="background-color:#FFC8C8; color: #000000font-size:8pt; line-height: 1.1">stop </span>
+<span style="background-color:#FFE7E7; color: #000000font-size:8pt; line-height: 1.1">abortion </span>
+<span style="background-color:#FFFCFC; color: #000000font-size:8pt; line-height: 1.1">rt </span>
+<span style="background-color:#FFCECE; color: #000000font-size:8pt; line-height: 1.1">msscarlettblue </span>
+<span style="background-color:#AFAFFF; color: #000000font-size:8pt; line-height: 1.1">i </span>
+<span style="background-color:#ECECFF; color: #000000font-size:8pt; line-height: 1.1">be </span>
+<span style="background-color:#FCFCFF; color: #000000font-size:8pt; line-height: 1.1">a </span>
+<span style="background-color:#FFC3C3; color: #000000font-size:8pt; line-height: 1.1">american </span>
+<span style="background-color:#FFB9B9; color: #000000font-size:8pt; line-height: 1.1">a </span>
+<span style="background-color:#FFC8C8; color: #000000font-size:8pt; line-height: 1.1">feminist </span>
+<span style="background-color:#FFD8D8; color: #000000font-size:8pt; line-height: 1.1">a </span>
+<span style="background-color:#FFF7F7; color: #000000font-size:8pt; line-height: 1.1">christian </span>
+</span>
+</div>
+<div class="three wide column">
+<div class="ui red right aligned label" data-content="True Label">rep</div>
+<div class="ui red basic right aligned label" data-content="Predicted Probability">0.67</div>
+</div>
+<div class="twelve wide column">
+<span>
+<span style="background-color:#FFA9A9; color: #000000font-size:8pt; line-height: 1.1">alleged </span>
+<span style="background-color:#FF9A9A; color: #000000font-size:8pt; line-height: 1.1">gang </span>
+<span style="background-color:#FF9A9A; color: #000000font-size:8pt; line-height: 1.1">member </span>
+<span style="background-color:#FF5C5C; color: #454545font-size:8pt; line-height: 1.1">who </span>
+<span style="background-color:#FF2424; color: #B6B6B6font-size:8pt; line-height: 1.1">be </span>
+<span style="background-color:#FF1E1E; color: #C1C1C1font-size:8pt; line-height: 1.1">illegal </span>
+<span style="background-color:#FF1E1E; color: #C1C1C1font-size:8pt; line-height: 1.1">alien </span>
+<span style="background-color:#FF1E1E; color: #C1C1C1font-size:8pt; line-height: 1.1">charge </span>
+<span style="background-color:#FF7676; color: #121212font-size:8pt; line-height: 1.1">with </span>
+<span style="background-color:#A4A4FF; color: #000000font-size:8pt; line-height: 1.1">kidnap </span>
+<span style="background-color:#9595FF; color: #000000font-size:8pt; line-height: 1.1">and </span>
+<span style="background-color:#BEBEFF; color: #000000font-size:8pt; line-height: 1.1">murder </span>
+<span style="background-color:#E7E7FF; color: #000000font-size:8pt; line-height: 1.1">of </span>
+<span style="background-color:#F2F2FF; color: #000000font-size:8pt; line-height: 1.1">houston </span>
+<span style="background-color:#FFD3D3; color: #000000font-size:8pt; line-height: 1.1">teenager </span>
+<span style="background-color:#FFDDDD; color: #000000font-size:8pt; line-height: 1.1">age </span>
+<span style="background-color:#AFAFFF; color: #000000font-size:8pt; line-height: 1.1">and </span>
+<span style="background-color:#FFA4A4; color: #000000font-size:8pt; line-height: 1.1">year </span>
+<span style="background-color:#FF8B8B; color: #000000font-size:8pt; line-height: 1.1">old </span>
+<span style="background-color:#FF8B8B; color: #000000font-size:8pt; line-height: 1.1">buildthatwall </span>
+<span style="background-color:#FF8B8B; color: #000000font-size:8pt; line-height: 1.1">deport </span>
+<span style="background-color:#FF8B8B; color: #000000font-size:8pt; line-height: 1.1">realdonaldtrump </span>
+</span>
+</div>
+<div class="three wide column">
+<div class="ui red right aligned label" data-content="True Label">rep</div>
+<div class="ui red basic right aligned label" data-content="Predicted Probability">1</div>
+</div>
+<div class="twelve wide column">
+<span>
+<span style="background-color:#FF0000; color: #FFFFFFfont-size:8pt; line-height: 1.1">bnhs2arhg </span>
+<span style="background-color:#FF0000; color: #FFFFFFfont-size:8pt; line-height: 1.1">denisegrimsley </span>
+<span style="background-color:#FF0000; color: #FFFFFFfont-size:8pt; line-height: 1.1">maga </span>
+<span style="background-color:#FF0000; color: #FFFFFFfont-size:8pt; line-height: 1.1">express </span>
+<span style="background-color:#FFA4A4; color: #000000font-size:8pt; line-height: 1.1">sound </span>
+<span style="background-color:#FFECEC; color: #000000font-size:8pt; line-height: 1.1">awesome </span>
+<span style="background-color:#FFD3D3; color: #000000font-size:8pt; line-height: 1.1">pro </span>
+<span style="background-color:#FFB4B4; color: #000000font-size:8pt; line-height: 1.1">gun </span>
+<span style="background-color:#FFB4B4; color: #000000font-size:8pt; line-height: 1.1">pro </span>
+<span style="background-color:#FFAFAF; color: #000000font-size:8pt; line-height: 1.1">life </span>
+<span style="background-color:#FF8B8B; color: #000000font-size:8pt; line-height: 1.1">anti </span>
+<span style="background-color:#FFA4A4; color: #000000font-size:8pt; line-height: 1.1">tax </span>
+<span style="background-color:#C3C3FF; color: #000000font-size:8pt; line-height: 1.1">this </span>
+<span style="background-color:#DDDDFF; color: #000000font-size:8pt; line-height: 1.1">is </span>
+<span style="background-color:#C3C3FF; color: #000000font-size:8pt; line-height: 1.1">what </span>
+<span style="background-color:#C3C3FF; color: #000000font-size:8pt; line-height: 1.1">we </span>
+<span style="background-color:#FF0F0F; color: #E0E0E0font-size:8pt; line-height: 1.1">need </span>
+<span style="background-color:#FF0F0F; color: #E0E0E0font-size:8pt; line-height: 1.1">adesenze </span>
+<span style="background-color:#FF0F0F; color: #E0E0E0font-size:8pt; line-height: 1.1">denisegrimsley </span>
+<span style="background-color:#FF0F0F; color: #E0E0E0font-size:8pt; line-height: 1.1">magacandidates2 </span>
+<span style="background-color:#FF0F0F; color: #E0E0E0font-size:8pt; line-height: 1.1">floridachiefs </span>
+</span>
+</div>
+<script>$('.label')
+      .popup()
+    ;</script>
+</div>
+</div>
+</body>
+
+---
+
+### Next Steps
+
+&lt;br&gt;
+
+* Predicting silent majority: Using liked tweets and friend networks as additional features. 
+* Generalization: Out of state validation with voter registration files e.g. from Rhode Island or Nebraska
+* Predicting the US general election 2020 
+    + large twitter non-probability samples (geo tagged)
+    + predict additional features like sex and age
+    + post stratification of county level aggregation
+
+
+* Bag of words models
+* Write a package that brings large scale experimentation of sequence language models to R
+* Provide pre-trained models or API
+    + voteornot: theta, party, vote
+    + sentiment
+    + toxicity
+
+&lt;!-- * though NLP seems to be doing pretty well with BERT and friends these days, quite likely owing to the more deliberate nature of text, and a higher signal to noise ratio). --&gt;
+&lt;!-- * PageRank for finding influencer -&gt; missinformation? --&gt;
+&lt;!-- * Conover et al. (2012) use Twitter messages to develop political information diffusion networks, and use those networks to predict the political alignment of Twitter users. --&gt;
+&lt;!-- * Conover et al. (2012) used hashtags as a basis of predicting the political alignment of Twitter --&gt;
+&lt;!-- users, ultimately predicting political affiliations at a 91% accuracy rate. --&gt;
+&lt;!-- * Tsakalidis et al. (2015) generated models based on Twitter and poll information to predict the outcome of elections in the EU (Germany, Netherlands and Greece). Their approach included capturing the number of times that different parties are mentioned in the Twitter tweets about the elections in particular countries. In addition, they used sentiment analysis to assign a sentiment value to each tweet. They find that the use of the Twitter variables generates statistically significantly better models than just using poll information. --&gt;
+
+
+---
+
+### References
+
+&lt;a name=bib-alvarez1997analysis&gt;&lt;/a&gt;[Alvarez, R. M. and J.
+Nagler](#cite-alvarez1997analysis) (1997). "Analysis of crossover
+and strategic voting".
+
+&lt;a name=bib-kalchbrenner2014convolutional&gt;&lt;/a&gt;[Kalchbrenner, N, E.
+Grefenstette, and P. Blunsom](#cite-kalchbrenner2014convolutional)
+(2014). "A convolutional neural network for modelling sentences".
+In: _arXiv preprint arXiv:1404.2188_.
+
+&lt;a name=bib-kim2014convolutional&gt;&lt;/a&gt;[Kim,
+Y.](#cite-kim2014convolutional) (2014). "Convolutional neural
+networks for sentence classification". In: _arXiv preprint
+arXiv:1408.5882_.
+
+&lt;a name=bib-mikolov2013efficient&gt;&lt;/a&gt;[Mikolov, T, K. Chen, G.
+Corrado, et al.](#cite-mikolov2013efficient) (2013). "Efficient
+estimation of word representations in vector space". In: _arXiv
+preprint arXiv:1301.3781_.
+
+
+
+---
+
+
+### Appendix
+
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; metric &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; name &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; form &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; outcome &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mse &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mean Squared Error &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; `\(\frac{1}{N}\sum^N_{i=1} (y_i -\hat y)^2\)` &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; linear &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; rmse &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Root Mean Squared Error &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; `\(\sqrt{\frac{1}{N}\sum^N_{i=1} (y_i -\hat y_i)^2}\)` &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; linear &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mae &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mean Absolute Error &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; `\(\frac{1}{N}\sum^N_{i=1} ||y_i -\hat y_i||\)` &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; linear &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mlog &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mean Log Loss &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; `\(\frac{1}{N} y_i 	imes ln(\hat y_i) + (1 - y_i) 	imes ln(1-\hat y_i)\)` &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; precision &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Precision &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; \frac{1}{(\hat y_i = 1)} \sum^N_{i=1} (\hat y = 1) 	imes y_i &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; binary &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; acc &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Accuracy &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; `\(\frac{1}{N} \sum^N_{i=1}(y_i == \hat y_i)\)` &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; categorical &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; f1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; F1 Score &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; `\(\frac{2*precision*recal}{precision+recall}\)` &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; categorical &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
