@@ -146,7 +146,7 @@ class: inverse
 
 * Infer individual charcteristics by social media activity and content 
 * Most of these studies focus on political actors rather than citizens
-    &lt;!-- + voters (Barberá, 2015) --&gt;
+    + voters (Barberá, 2015)
     + elites (Lowe et al., 2015) 
     + aggregate public opinion (Beauchamp, 2017)
     + election outcomes (Lopez et al., 2018)
@@ -659,117 +659,6 @@ class: inverse, center, middle
 ### Experiments
 
 
-
-&lt;!-- 
-
-### Benchmarks 
-
-* Predict party affiliation and voting propensity based on socio-demographic data
-* Outcomes (colored) are used mutually as covariates
-* Predictive model: Boosted trees (Xgboost)
-* Baseline to compare against text based models
-
-
-&lt;table class="table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;"&gt;
-&lt;caption style="font-size: initial !important;"&gt;Feature Matrix &lt;br&gt;&lt;br&gt;
-&lt;/caption&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:center;"&gt; theta &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; party &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; age &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; gender &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; race_asian &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; race_black &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; race_hispanic &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; race_multi &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; race_other &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; race_white &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:center;color: red !important;"&gt; 0.95 &lt;/td&gt;
-   &lt;td style="text-align:center;color: blue !important;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 70.44 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:center;color: red !important;"&gt; 1.00 &lt;/td&gt;
-   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 42.17 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:center;color: red !important;"&gt; 1.66 &lt;/td&gt;
-   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 59.93 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:center;color: red !important;"&gt; 0.08 &lt;/td&gt;
-   &lt;td style="text-align:center;color: blue !important;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 41.94 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:center;color: red !important;"&gt; -1.45 &lt;/td&gt;
-   &lt;td style="text-align:center;color: blue !important;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 53.16 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;br&gt;
-
-
-
-.pull-left[
-
-&lt;img src="index_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
-
-]
-
-.pull-right[
-
-&lt;img src="index_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
-
-]
-
---&gt;
-
-
 ---
 
 ### Model Tuning
@@ -778,9 +667,9 @@ class: inverse, center, middle
 * optimization is superior to random or grid search
 * out of sample train/validation/test split (.8/.1/.1)
 
-&lt;img src="index_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
 
-&lt;img src="index_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -822,13 +711,13 @@ class: inverse, center, middle
 .pull-right[
 
 
-&lt;img src="index_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
 
 ]
 
 &lt;br&gt;
 
-&lt;img src="index_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -914,16 +803,16 @@ class: inverse, center, middle
 </div>
 <div class="twelve wide column">
 <span>
-<span style="background-color:#AFAFFF; color: #000000font-size:8pt; line-height: 1.1">washington </span>
-<span style="background-color:#7676FF; color: #121212font-size:8pt; line-height: 1.1">stop </span>
-<span style="background-color:#1E1EFF; color: #C1C1C1font-size:8pt; line-height: 1.1">racially </span>
-<span style="background-color:#0A0AFF; color: #EAEAEAfont-size:8pt; line-height: 1.1">profil </span>
-<span style="background-color:#0A0AFF; color: #EAEAEAfont-size:8pt; line-height: 1.1">latinx </span>
-<span style="background-color:#1414FF; color: #D5D5D5font-size:8pt; line-height: 1.1">american </span>
-<span style="background-color:#1414FF; color: #D5D5D5font-size:8pt; line-height: 1.1">citizen </span>
-<span style="background-color:#E2E2FF; color: #000000font-size:8pt; line-height: 1.1">for </span>
-<span style="background-color:#AFAFFF; color: #000000font-size:8pt; line-height: 1.1">passport </span>
-<span style="background-color:#9F9FFF; color: #000000font-size:8pt; line-height: 1.1">denial </span>
+<span style="background-color:#AFAFFF; color: #4F4F4Ffont-size:8pt; line-height: 1.1">washington </span>
+<span style="background-color:#7676FF; color: #888888font-size:8pt; line-height: 1.1">stop </span>
+<span style="background-color:#1E1EFF; color: #E0E0E0font-size:8pt; line-height: 1.1">racially </span>
+<span style="background-color:#0A0AFF; color: #F4F4F4font-size:8pt; line-height: 1.1">profil </span>
+<span style="background-color:#0A0AFF; color: #F4F4F4font-size:8pt; line-height: 1.1">latinx </span>
+<span style="background-color:#1414FF; color: #EAEAEAfont-size:8pt; line-height: 1.1">american </span>
+<span style="background-color:#1414FF; color: #EAEAEAfont-size:8pt; line-height: 1.1">citizen </span>
+<span style="background-color:#E2E2FF; color: #1C1C1Cfont-size:8pt; line-height: 1.1">for </span>
+<span style="background-color:#AFAFFF; color: #4F4F4Ffont-size:8pt; line-height: 1.1">passport </span>
+<span style="background-color:#9F9FFF; color: #5F5F5Ffont-size:8pt; line-height: 1.1">denial </span>
 </span>
 </div>
 <div class="three wide column">
@@ -932,18 +821,18 @@ class: inverse, center, middle
 </div>
 <div class="twelve wide column">
 <span>
-<span style="background-color:#BEBEFF; color: #000000font-size:8pt; line-height: 1.1">support </span>
-<span style="background-color:#B9B9FF; color: #000000font-size:8pt; line-height: 1.1">christine </span>
-<span style="background-color:#7B7BFF; color: #070707font-size:8pt; line-height: 1.1">blasey </span>
-<span style="background-color:#1919FF; color: #CBCBCBfont-size:8pt; line-height: 1.1">ford </span>
-<span style="background-color:#1919FF; color: #CBCBCBfont-size:8pt; line-height: 1.1">believesurvivors </span>
-<span style="background-color:#3333FF; color: #979797font-size:8pt; line-height: 1.1">stopkavanaugh </span>
+<span style="background-color:#BEBEFF; color: #404040font-size:8pt; line-height: 1.1">support </span>
+<span style="background-color:#B9B9FF; color: #454545font-size:8pt; line-height: 1.1">christine </span>
+<span style="background-color:#7B7BFF; color: #838383font-size:8pt; line-height: 1.1">blasey </span>
+<span style="background-color:#1919FF; color: #E5E5E5font-size:8pt; line-height: 1.1">ford </span>
+<span style="background-color:#1919FF; color: #E5E5E5font-size:8pt; line-height: 1.1">believesurvivors </span>
+<span style="background-color:#3333FF; color: #CBCBCBfont-size:8pt; line-height: 1.1">stopkavanaugh </span>
 <span style="background-color:#0000FF; color: #FFFFFFfont-size:8pt; line-height: 1.1">do </span>
-<span style="background-color:#0F0FFF; color: #E0E0E0font-size:8pt; line-height: 1.1">not </span>
-<span style="background-color:#B4B4FF; color: #000000font-size:8pt; line-height: 1.1">promote </span>
-<span style="background-color:#B9B9FF; color: #000000font-size:8pt; line-height: 1.1">kavanaugh </span>
-<span style="background-color:#B9B9FF; color: #000000font-size:8pt; line-height: 1.1">impeach </span>
-<span style="background-color:#9595FF; color: #000000font-size:8pt; line-height: 1.1">him </span>
+<span style="background-color:#0F0FFF; color: #EFEFEFfont-size:8pt; line-height: 1.1">not </span>
+<span style="background-color:#B4B4FF; color: #4A4A4Afont-size:8pt; line-height: 1.1">promote </span>
+<span style="background-color:#B9B9FF; color: #454545font-size:8pt; line-height: 1.1">kavanaugh </span>
+<span style="background-color:#B9B9FF; color: #454545font-size:8pt; line-height: 1.1">impeach </span>
+<span style="background-color:#9595FF; color: #696969font-size:8pt; line-height: 1.1">him </span>
 </span>
 </div>
 <div class="three wide column">
@@ -952,44 +841,44 @@ class: inverse, center, middle
 </div>
 <div class="twelve wide column">
 <span>
-<span style="background-color:#CECEFF; color: #000000font-size:8pt; line-height: 1.1">let </span>
-<span style="background-color:#E7E7FF; color: #000000font-size:8pt; line-height: 1.1">s </span>
-<span style="background-color:#E7E7FF; color: #000000font-size:8pt; line-height: 1.1">eliminate </span>
-<span style="background-color:#E7E7FF; color: #000000font-size:8pt; line-height: 1.1">columbus </span>
-<span style="background-color:#FFBEBE; color: #000000font-size:8pt; line-height: 1.1">day </span>
-<span style="background-color:#FFFCFC; color: #000000font-size:8pt; line-height: 1.1">as </span>
-<span style="background-color:#FFCECE; color: #000000font-size:8pt; line-height: 1.1">a </span>
-<span style="background-color:#FFCECE; color: #000000font-size:8pt; line-height: 1.1">national </span>
-<span style="background-color:#FFCECE; color: #000000font-size:8pt; line-height: 1.1">holiday </span>
-<span style="background-color:#FFCECE; color: #000000font-size:8pt; line-height: 1.1">instead </span>
-<span style="background-color:#F7F7FF; color: #000000font-size:8pt; line-height: 1.1">make </span>
-<span style="background-color:#DDDDFF; color: #000000font-size:8pt; line-height: 1.1">election </span>
-<span style="background-color:#F2F2FF; color: #000000font-size:8pt; line-height: 1.1">day </span>
-<span style="background-color:#FFE2E2; color: #000000font-size:8pt; line-height: 1.1">a </span>
-<span style="background-color:#FFBEBE; color: #000000font-size:8pt; line-height: 1.1">national </span>
-<span style="background-color:#FFC3C3; color: #000000font-size:8pt; line-height: 1.1">holiday </span>
-<span style="background-color:#FFBEBE; color: #000000font-size:8pt; line-height: 1.1">close </span>
-<span style="background-color:#FFE7E7; color: #000000font-size:8pt; line-height: 1.1">the </span>
-<span style="background-color:#FFFCFC; color: #000000font-size:8pt; line-height: 1.1">bank </span>
-<span style="background-color:#FCFCFF; color: #000000font-size:8pt; line-height: 1.1">close </span>
-<span style="background-color:#E2E2FF; color: #000000font-size:8pt; line-height: 1.1">the </span>
-<span style="background-color:#DDDDFF; color: #000000font-size:8pt; line-height: 1.1">school </span>
-<span style="background-color:#C8C8FF; color: #000000font-size:8pt; line-height: 1.1">and </span>
-<span style="background-color:#9F9FFF; color: #000000font-size:8pt; line-height: 1.1">make </span>
-<span style="background-color:#9F9FFF; color: #000000font-size:8pt; line-height: 1.1">it </span>
-<span style="background-color:#9F9FFF; color: #000000font-size:8pt; line-height: 1.1">so </span>
-<span style="background-color:#9F9FFF; color: #000000font-size:8pt; line-height: 1.1">that </span>
-<span style="background-color:#BEBEFF; color: #000000font-size:8pt; line-height: 1.1">people </span>
-<span style="background-color:#B9B9FF; color: #000000font-size:8pt; line-height: 1.1">can </span>
-<span style="background-color:#B9B9FF; color: #000000font-size:8pt; line-height: 1.1">more </span>
-<span style="background-color:#B9B9FF; color: #000000font-size:8pt; line-height: 1.1">easily </span>
-<span style="background-color:#8585FF; color: #000000font-size:8pt; line-height: 1.1">make </span>
-<span style="background-color:#8585FF; color: #000000font-size:8pt; line-height: 1.1">they </span>
-<span style="background-color:#8585FF; color: #000000font-size:8pt; line-height: 1.1">voice </span>
-<span style="background-color:#7171FF; color: #1C1C1Cfont-size:8pt; line-height: 1.1">hear </span>
-<span style="background-color:#8080FF; color: #000000font-size:8pt; line-height: 1.1">at </span>
-<span style="background-color:#E2E2FF; color: #000000font-size:8pt; line-height: 1.1">the </span>
-<span style="background-color:#E2E2FF; color: #000000font-size:8pt; line-height: 1.1">poll </span>
+<span style="background-color:#CECEFF; color: #303030font-size:8pt; line-height: 1.1">let </span>
+<span style="background-color:#E7E7FF; color: #171717font-size:8pt; line-height: 1.1">s </span>
+<span style="background-color:#E7E7FF; color: #171717font-size:8pt; line-height: 1.1">eliminate </span>
+<span style="background-color:#E7E7FF; color: #171717font-size:8pt; line-height: 1.1">columbus </span>
+<span style="background-color:#FFBEBE; color: #404040font-size:8pt; line-height: 1.1">day </span>
+<span style="background-color:#FFFCFC; color: #020202font-size:8pt; line-height: 1.1">as </span>
+<span style="background-color:#FFCECE; color: #303030font-size:8pt; line-height: 1.1">a </span>
+<span style="background-color:#FFCECE; color: #303030font-size:8pt; line-height: 1.1">national </span>
+<span style="background-color:#FFCECE; color: #303030font-size:8pt; line-height: 1.1">holiday </span>
+<span style="background-color:#FFCECE; color: #303030font-size:8pt; line-height: 1.1">instead </span>
+<span style="background-color:#F7F7FF; color: #070707font-size:8pt; line-height: 1.1">make </span>
+<span style="background-color:#DDDDFF; color: #212121font-size:8pt; line-height: 1.1">election </span>
+<span style="background-color:#F2F2FF; color: #0C0C0Cfont-size:8pt; line-height: 1.1">day </span>
+<span style="background-color:#FFE2E2; color: #1C1C1Cfont-size:8pt; line-height: 1.1">a </span>
+<span style="background-color:#FFBEBE; color: #404040font-size:8pt; line-height: 1.1">national </span>
+<span style="background-color:#FFC3C3; color: #3B3B3Bfont-size:8pt; line-height: 1.1">holiday </span>
+<span style="background-color:#FFBEBE; color: #404040font-size:8pt; line-height: 1.1">close </span>
+<span style="background-color:#FFE7E7; color: #171717font-size:8pt; line-height: 1.1">the </span>
+<span style="background-color:#FFFCFC; color: #020202font-size:8pt; line-height: 1.1">bank </span>
+<span style="background-color:#FCFCFF; color: #020202font-size:8pt; line-height: 1.1">close </span>
+<span style="background-color:#E2E2FF; color: #1C1C1Cfont-size:8pt; line-height: 1.1">the </span>
+<span style="background-color:#DDDDFF; color: #212121font-size:8pt; line-height: 1.1">school </span>
+<span style="background-color:#C8C8FF; color: #363636font-size:8pt; line-height: 1.1">and </span>
+<span style="background-color:#9F9FFF; color: #5F5F5Ffont-size:8pt; line-height: 1.1">make </span>
+<span style="background-color:#9F9FFF; color: #5F5F5Ffont-size:8pt; line-height: 1.1">it </span>
+<span style="background-color:#9F9FFF; color: #5F5F5Ffont-size:8pt; line-height: 1.1">so </span>
+<span style="background-color:#9F9FFF; color: #5F5F5Ffont-size:8pt; line-height: 1.1">that </span>
+<span style="background-color:#BEBEFF; color: #404040font-size:8pt; line-height: 1.1">people </span>
+<span style="background-color:#B9B9FF; color: #454545font-size:8pt; line-height: 1.1">can </span>
+<span style="background-color:#B9B9FF; color: #454545font-size:8pt; line-height: 1.1">more </span>
+<span style="background-color:#B9B9FF; color: #454545font-size:8pt; line-height: 1.1">easily </span>
+<span style="background-color:#8585FF; color: #797979font-size:8pt; line-height: 1.1">make </span>
+<span style="background-color:#8585FF; color: #797979font-size:8pt; line-height: 1.1">they </span>
+<span style="background-color:#8585FF; color: #797979font-size:8pt; line-height: 1.1">voice </span>
+<span style="background-color:#7171FF; color: #8D8D8Dfont-size:8pt; line-height: 1.1">hear </span>
+<span style="background-color:#8080FF; color: #7E7E7Efont-size:8pt; line-height: 1.1">at </span>
+<span style="background-color:#E2E2FF; color: #1C1C1Cfont-size:8pt; line-height: 1.1">the </span>
+<span style="background-color:#E2E2FF; color: #1C1C1Cfont-size:8pt; line-height: 1.1">poll </span>
 </span>
 </div>
 <div class="three wide column">
@@ -998,34 +887,34 @@ class: inverse, center, middle
 </div>
 <div class="twelve wide column">
 <span>
-<span style="background-color:#9090FF; color: #000000font-size:8pt; line-height: 1.1">republicans </span>
-<span style="background-color:#9090FF; color: #000000font-size:8pt; line-height: 1.1">do </span>
-<span style="background-color:#8585FF; color: #000000font-size:8pt; line-height: 1.1">not </span>
-<span style="background-color:#C3C3FF; color: #000000font-size:8pt; line-height: 1.1">believe </span>
-<span style="background-color:#C3C3FF; color: #000000font-size:8pt; line-height: 1.1">ban </span>
-<span style="background-color:#B4B4FF; color: #000000font-size:8pt; line-height: 1.1">gun </span>
-<span style="background-color:#7676FF; color: #121212font-size:8pt; line-height: 1.1">will </span>
-<span style="background-color:#6C6CFF; color: #262626font-size:8pt; line-height: 1.1">stop </span>
-<span style="background-color:#7676FF; color: #121212font-size:8pt; line-height: 1.1">violence </span>
-<span style="background-color:#7676FF; color: #121212font-size:8pt; line-height: 1.1">but </span>
-<span style="background-color:#6767FF; color: #303030font-size:8pt; line-height: 1.1">somehow </span>
-<span style="background-color:#FCFCFF; color: #000000font-size:8pt; line-height: 1.1">believe </span>
-<span style="background-color:#FFC3C3; color: #000000font-size:8pt; line-height: 1.1">that </span>
-<span style="background-color:#FFECEC; color: #000000font-size:8pt; line-height: 1.1">ban </span>
-<span style="background-color:#F7F7FF; color: #000000font-size:8pt; line-height: 1.1">abortion </span>
-<span style="background-color:#FFFCFC; color: #000000font-size:8pt; line-height: 1.1">will </span>
-<span style="background-color:#FFC8C8; color: #000000font-size:8pt; line-height: 1.1">stop </span>
-<span style="background-color:#FFE7E7; color: #000000font-size:8pt; line-height: 1.1">abortion </span>
-<span style="background-color:#FFFCFC; color: #000000font-size:8pt; line-height: 1.1">rt </span>
-<span style="background-color:#FFCECE; color: #000000font-size:8pt; line-height: 1.1">msscarlettblue </span>
-<span style="background-color:#AFAFFF; color: #000000font-size:8pt; line-height: 1.1">i </span>
-<span style="background-color:#ECECFF; color: #000000font-size:8pt; line-height: 1.1">be </span>
-<span style="background-color:#FCFCFF; color: #000000font-size:8pt; line-height: 1.1">a </span>
-<span style="background-color:#FFC3C3; color: #000000font-size:8pt; line-height: 1.1">american </span>
-<span style="background-color:#FFB9B9; color: #000000font-size:8pt; line-height: 1.1">a </span>
-<span style="background-color:#FFC8C8; color: #000000font-size:8pt; line-height: 1.1">feminist </span>
-<span style="background-color:#FFD8D8; color: #000000font-size:8pt; line-height: 1.1">a </span>
-<span style="background-color:#FFF7F7; color: #000000font-size:8pt; line-height: 1.1">christian </span>
+<span style="background-color:#9090FF; color: #6E6E6Efont-size:8pt; line-height: 1.1">republicans </span>
+<span style="background-color:#9090FF; color: #6E6E6Efont-size:8pt; line-height: 1.1">do </span>
+<span style="background-color:#8585FF; color: #797979font-size:8pt; line-height: 1.1">not </span>
+<span style="background-color:#C3C3FF; color: #3B3B3Bfont-size:8pt; line-height: 1.1">believe </span>
+<span style="background-color:#C3C3FF; color: #3B3B3Bfont-size:8pt; line-height: 1.1">ban </span>
+<span style="background-color:#B4B4FF; color: #4A4A4Afont-size:8pt; line-height: 1.1">gun </span>
+<span style="background-color:#7676FF; color: #888888font-size:8pt; line-height: 1.1">will </span>
+<span style="background-color:#6C6CFF; color: #929292font-size:8pt; line-height: 1.1">stop </span>
+<span style="background-color:#7676FF; color: #888888font-size:8pt; line-height: 1.1">violence </span>
+<span style="background-color:#7676FF; color: #888888font-size:8pt; line-height: 1.1">but </span>
+<span style="background-color:#6767FF; color: #979797font-size:8pt; line-height: 1.1">somehow </span>
+<span style="background-color:#FCFCFF; color: #020202font-size:8pt; line-height: 1.1">believe </span>
+<span style="background-color:#FFC3C3; color: #3B3B3Bfont-size:8pt; line-height: 1.1">that </span>
+<span style="background-color:#FFECEC; color: #121212font-size:8pt; line-height: 1.1">ban </span>
+<span style="background-color:#F7F7FF; color: #070707font-size:8pt; line-height: 1.1">abortion </span>
+<span style="background-color:#FFFCFC; color: #020202font-size:8pt; line-height: 1.1">will </span>
+<span style="background-color:#FFC8C8; color: #363636font-size:8pt; line-height: 1.1">stop </span>
+<span style="background-color:#FFE7E7; color: #171717font-size:8pt; line-height: 1.1">abortion </span>
+<span style="background-color:#FFFCFC; color: #020202font-size:8pt; line-height: 1.1">rt </span>
+<span style="background-color:#FFCECE; color: #303030font-size:8pt; line-height: 1.1">msscarlettblue </span>
+<span style="background-color:#AFAFFF; color: #4F4F4Ffont-size:8pt; line-height: 1.1">i </span>
+<span style="background-color:#ECECFF; color: #121212font-size:8pt; line-height: 1.1">be </span>
+<span style="background-color:#FCFCFF; color: #020202font-size:8pt; line-height: 1.1">a </span>
+<span style="background-color:#FFC3C3; color: #3B3B3Bfont-size:8pt; line-height: 1.1">american </span>
+<span style="background-color:#FFB9B9; color: #454545font-size:8pt; line-height: 1.1">a </span>
+<span style="background-color:#FFC8C8; color: #363636font-size:8pt; line-height: 1.1">feminist </span>
+<span style="background-color:#FFD8D8; color: #262626font-size:8pt; line-height: 1.1">a </span>
+<span style="background-color:#FFF7F7; color: #070707font-size:8pt; line-height: 1.1">christian </span>
 </span>
 </div>
 <div class="three wide column">
@@ -1034,28 +923,28 @@ class: inverse, center, middle
 </div>
 <div class="twelve wide column">
 <span>
-<span style="background-color:#FFA9A9; color: #000000font-size:8pt; line-height: 1.1">alleged </span>
-<span style="background-color:#FF9A9A; color: #000000font-size:8pt; line-height: 1.1">gang </span>
-<span style="background-color:#FF9A9A; color: #000000font-size:8pt; line-height: 1.1">member </span>
-<span style="background-color:#FF5C5C; color: #454545font-size:8pt; line-height: 1.1">who </span>
-<span style="background-color:#FF2424; color: #B6B6B6font-size:8pt; line-height: 1.1">be </span>
-<span style="background-color:#FF1E1E; color: #C1C1C1font-size:8pt; line-height: 1.1">illegal </span>
-<span style="background-color:#FF1E1E; color: #C1C1C1font-size:8pt; line-height: 1.1">alien </span>
-<span style="background-color:#FF1E1E; color: #C1C1C1font-size:8pt; line-height: 1.1">charge </span>
-<span style="background-color:#FF7676; color: #121212font-size:8pt; line-height: 1.1">with </span>
-<span style="background-color:#A4A4FF; color: #000000font-size:8pt; line-height: 1.1">kidnap </span>
-<span style="background-color:#9595FF; color: #000000font-size:8pt; line-height: 1.1">and </span>
-<span style="background-color:#BEBEFF; color: #000000font-size:8pt; line-height: 1.1">murder </span>
-<span style="background-color:#E7E7FF; color: #000000font-size:8pt; line-height: 1.1">of </span>
-<span style="background-color:#F2F2FF; color: #000000font-size:8pt; line-height: 1.1">houston </span>
-<span style="background-color:#FFD3D3; color: #000000font-size:8pt; line-height: 1.1">teenager </span>
-<span style="background-color:#FFDDDD; color: #000000font-size:8pt; line-height: 1.1">age </span>
-<span style="background-color:#AFAFFF; color: #000000font-size:8pt; line-height: 1.1">and </span>
-<span style="background-color:#FFA4A4; color: #000000font-size:8pt; line-height: 1.1">year </span>
-<span style="background-color:#FF8B8B; color: #000000font-size:8pt; line-height: 1.1">old </span>
-<span style="background-color:#FF8B8B; color: #000000font-size:8pt; line-height: 1.1">buildthatwall </span>
-<span style="background-color:#FF8B8B; color: #000000font-size:8pt; line-height: 1.1">deport </span>
-<span style="background-color:#FF8B8B; color: #000000font-size:8pt; line-height: 1.1">realdonaldtrump </span>
+<span style="background-color:#FFA9A9; color: #555555font-size:8pt; line-height: 1.1">alleged </span>
+<span style="background-color:#FF9A9A; color: #646464font-size:8pt; line-height: 1.1">gang </span>
+<span style="background-color:#FF9A9A; color: #646464font-size:8pt; line-height: 1.1">member </span>
+<span style="background-color:#FF5C5C; color: #A2A2A2font-size:8pt; line-height: 1.1">who </span>
+<span style="background-color:#FF2424; color: #DADADAfont-size:8pt; line-height: 1.1">be </span>
+<span style="background-color:#FF1E1E; color: #E0E0E0font-size:8pt; line-height: 1.1">illegal </span>
+<span style="background-color:#FF1E1E; color: #E0E0E0font-size:8pt; line-height: 1.1">alien </span>
+<span style="background-color:#FF1E1E; color: #E0E0E0font-size:8pt; line-height: 1.1">charge </span>
+<span style="background-color:#FF7676; color: #888888font-size:8pt; line-height: 1.1">with </span>
+<span style="background-color:#A4A4FF; color: #5A5A5Afont-size:8pt; line-height: 1.1">kidnap </span>
+<span style="background-color:#9595FF; color: #696969font-size:8pt; line-height: 1.1">and </span>
+<span style="background-color:#BEBEFF; color: #404040font-size:8pt; line-height: 1.1">murder </span>
+<span style="background-color:#E7E7FF; color: #171717font-size:8pt; line-height: 1.1">of </span>
+<span style="background-color:#F2F2FF; color: #0C0C0Cfont-size:8pt; line-height: 1.1">houston </span>
+<span style="background-color:#FFD3D3; color: #2B2B2Bfont-size:8pt; line-height: 1.1">teenager </span>
+<span style="background-color:#FFDDDD; color: #212121font-size:8pt; line-height: 1.1">age </span>
+<span style="background-color:#AFAFFF; color: #4F4F4Ffont-size:8pt; line-height: 1.1">and </span>
+<span style="background-color:#FFA4A4; color: #5A5A5Afont-size:8pt; line-height: 1.1">year </span>
+<span style="background-color:#FF8B8B; color: #737373font-size:8pt; line-height: 1.1">old </span>
+<span style="background-color:#FF8B8B; color: #737373font-size:8pt; line-height: 1.1">buildthatwall </span>
+<span style="background-color:#FF8B8B; color: #737373font-size:8pt; line-height: 1.1">deport </span>
+<span style="background-color:#FF8B8B; color: #737373font-size:8pt; line-height: 1.1">realdonaldtrump </span>
 </span>
 </div>
 <div class="three wide column">
@@ -1068,23 +957,23 @@ class: inverse, center, middle
 <span style="background-color:#FF0000; color: #FFFFFFfont-size:8pt; line-height: 1.1">denisegrimsley </span>
 <span style="background-color:#FF0000; color: #FFFFFFfont-size:8pt; line-height: 1.1">maga </span>
 <span style="background-color:#FF0000; color: #FFFFFFfont-size:8pt; line-height: 1.1">express </span>
-<span style="background-color:#FFA4A4; color: #000000font-size:8pt; line-height: 1.1">sound </span>
-<span style="background-color:#FFECEC; color: #000000font-size:8pt; line-height: 1.1">awesome </span>
-<span style="background-color:#FFD3D3; color: #000000font-size:8pt; line-height: 1.1">pro </span>
-<span style="background-color:#FFB4B4; color: #000000font-size:8pt; line-height: 1.1">gun </span>
-<span style="background-color:#FFB4B4; color: #000000font-size:8pt; line-height: 1.1">pro </span>
-<span style="background-color:#FFAFAF; color: #000000font-size:8pt; line-height: 1.1">life </span>
-<span style="background-color:#FF8B8B; color: #000000font-size:8pt; line-height: 1.1">anti </span>
-<span style="background-color:#FFA4A4; color: #000000font-size:8pt; line-height: 1.1">tax </span>
-<span style="background-color:#C3C3FF; color: #000000font-size:8pt; line-height: 1.1">this </span>
-<span style="background-color:#DDDDFF; color: #000000font-size:8pt; line-height: 1.1">is </span>
-<span style="background-color:#C3C3FF; color: #000000font-size:8pt; line-height: 1.1">what </span>
-<span style="background-color:#C3C3FF; color: #000000font-size:8pt; line-height: 1.1">we </span>
-<span style="background-color:#FF0F0F; color: #E0E0E0font-size:8pt; line-height: 1.1">need </span>
-<span style="background-color:#FF0F0F; color: #E0E0E0font-size:8pt; line-height: 1.1">adesenze </span>
-<span style="background-color:#FF0F0F; color: #E0E0E0font-size:8pt; line-height: 1.1">denisegrimsley </span>
-<span style="background-color:#FF0F0F; color: #E0E0E0font-size:8pt; line-height: 1.1">magacandidates2 </span>
-<span style="background-color:#FF0F0F; color: #E0E0E0font-size:8pt; line-height: 1.1">floridachiefs </span>
+<span style="background-color:#FFA4A4; color: #5A5A5Afont-size:8pt; line-height: 1.1">sound </span>
+<span style="background-color:#FFECEC; color: #121212font-size:8pt; line-height: 1.1">awesome </span>
+<span style="background-color:#FFD3D3; color: #2B2B2Bfont-size:8pt; line-height: 1.1">pro </span>
+<span style="background-color:#FFB4B4; color: #4A4A4Afont-size:8pt; line-height: 1.1">gun </span>
+<span style="background-color:#FFB4B4; color: #4A4A4Afont-size:8pt; line-height: 1.1">pro </span>
+<span style="background-color:#FFAFAF; color: #4F4F4Ffont-size:8pt; line-height: 1.1">life </span>
+<span style="background-color:#FF8B8B; color: #737373font-size:8pt; line-height: 1.1">anti </span>
+<span style="background-color:#FFA4A4; color: #5A5A5Afont-size:8pt; line-height: 1.1">tax </span>
+<span style="background-color:#C3C3FF; color: #3B3B3Bfont-size:8pt; line-height: 1.1">this </span>
+<span style="background-color:#DDDDFF; color: #212121font-size:8pt; line-height: 1.1">is </span>
+<span style="background-color:#C3C3FF; color: #3B3B3Bfont-size:8pt; line-height: 1.1">what </span>
+<span style="background-color:#C3C3FF; color: #3B3B3Bfont-size:8pt; line-height: 1.1">we </span>
+<span style="background-color:#FF0F0F; color: #EFEFEFfont-size:8pt; line-height: 1.1">need </span>
+<span style="background-color:#FF0F0F; color: #EFEFEFfont-size:8pt; line-height: 1.1">adesenze </span>
+<span style="background-color:#FF0F0F; color: #EFEFEFfont-size:8pt; line-height: 1.1">denisegrimsley </span>
+<span style="background-color:#FF0F0F; color: #EFEFEFfont-size:8pt; line-height: 1.1">magacandidates2 </span>
+<span style="background-color:#FF0F0F; color: #EFEFEFfont-size:8pt; line-height: 1.1">floridachiefs </span>
 </span>
 </div>
 <script>$('.label')
@@ -1214,6 +1103,115 @@ preprint arXiv:1301.3781_.
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+
+
+
+--- 
+
+### Benchmarks 
+
+* Predict party affiliation and voting propensity based on socio-demographic data
+* Outcomes (colored) are used mutually as covariates
+* Predictive model: Boosted trees (Xgboost)
+* Baseline to compare against text based models
+
+
+&lt;table class="table table-striped" style="font-size: 10px; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Feature Matrix &lt;br&gt;&lt;br&gt;
+&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; theta &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; party &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; age &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; gender &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; race_asian &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; race_black &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; race_hispanic &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; race_multi &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; race_other &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; race_white &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0.25 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 30.05 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 1.46 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 47.54 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; -1.39 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 50.47 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; -1.44 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 21.83 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0.98 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 32.95 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;br&gt;
+
+
+
+.pull-left[
+
+&lt;img src="index_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="index_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
+
+]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
