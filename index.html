@@ -4,7 +4,7 @@
     <title>index.utf8</title>
     <meta charset="utf-8" />
     <meta name="author" content="Simon Roth" />
-    <meta name="date" content="2019-06-13" />
+    <meta name="date" content="2019-06-18" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
     <script src="libs/kePrint/kePrint.js"></script>
@@ -104,7 +104,7 @@ class: inverse
   &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class = "four wide column"&gt;
-  2019-06-13
+  2019-06-18
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -113,7 +113,7 @@ class: inverse
 ### Outline
 
 * Motivation
-* Data &amp; Measurment
+* Data &amp; Measurement
 * NLP Methods
 * Experiments
 * Next Steps
@@ -133,7 +133,7 @@ class: inverse
 * Interpersonal networks (e.g. Huckfeldt and Sprague, 1995; Jost et al., 2018)
 * Hyperlink networks (e.g., Baek, 2009)
 * Neighborhood partisan context (e.g. McClurg, 2006; Sotirovic and McLeod, 2001)
-* Determinants of participaction (e.g. Broockman, 2014; Broockman and Ryan, 2017; Jacobs, Cook and Carpini, 2009). 
+* Determinants of participation (e.g. Broockman, 2014; Broockman and Ryan, 2017; Jacobs, Cook and Carpini, 2009). 
 
 
 &lt;!-- + gender/ethnicity --&gt;
@@ -144,14 +144,14 @@ class: inverse
 
 &lt;strong&gt;2. Technical studies&lt;/strong&gt;
 
-* Infer individual charcteristics by social media activity and content 
+* Infer individual characteristics by social media activity and content 
 * Most of these studies focus on political actors rather than citizens
     + voters (Barberá, 2015)
     + elites (Lowe et al., 2015) 
     + aggregate public opinion (Beauchamp, 2017)
     + election outcomes (Lopez et al., 2018)
     + elite values (Jones et al., 2018)
-    + politicial sophistication (Benoit et al., 2019). 
+    + political sophistication (Benoit et al., 2019). 
 
 &lt;!-- This reveals a research gap as concerns the relationship between citizens' actual (political) communication and political participation. --&gt;
 
@@ -260,7 +260,7 @@ class: inverse, center, middle
 &lt;br&gt;
 
 &lt;table class="table table-striped" style="margin-left: auto; margin-right: auto;"&gt;
-&lt;caption&gt;Document Termn Matrix (Binary or Count)  &lt;br&gt;&lt;br&gt;
+&lt;caption&gt;Document Term Matrix (Binary or Count)  &lt;br&gt;&lt;br&gt;
 &lt;/caption&gt;
  &lt;thead&gt;
   &lt;tr&gt;
@@ -332,11 +332,11 @@ class: inverse, center, middle
   N-Grams
 &lt;/div&gt;
 
-* instead of single words (uni-gram), word cooccurances of n-th order are **counted** 
+* instead of single words (uni-gram), word cooccurrences of n-th order are **counted** 
     + bigrams `\(:= [w_i, w_{i+1}]\)`
     + trigrams `\(:= [w_{i-1}, w_i, w_{i+1}]\)`
     + n-grams `\(:= [w_{i-n/2}, w_i, w_{i+n/2}]\)`
-* captures some local context but increases dimenionality
+* captures some local context but increases dimensionality
 
 &lt;table class="table table-striped" style="margin-left: auto; margin-right: auto;"&gt;
  &lt;thead&gt;
@@ -397,7 +397,7 @@ class: inverse, center, middle
 &lt;/div&gt;
 
 * weighs a term’s frequency (TF) by its inverse document frequency (IDF). 
-* common words are down weighted whereas rare words are upvoted
+* common words are down weighted whereas rare words are up-voted
 * `\(w_{t,d} = TF_{t, d} \text{ log } \frac{N}{DF_t}\)`
 
 &lt;table class="table table-striped" style="margin-left: auto; margin-right: auto;"&gt;
@@ -468,10 +468,10 @@ class: inverse, center, middle
 
 &lt;strong&gt; Number of columns&lt;/strong&gt;
 
-* Mature humans have a vocabluary capacity of 20-40 thousends words.
-* DTMs usually have 2-10 thousends word columns.
+* Mature humans have a vocabulary capacity of 20-40 thousands words.
+* DTMs usually have 2-10 thousands word columns.
 
-&lt;strong&gt;How to scale?&lt;/strong&gt; sequence models can meomorise 10-500 tausend words. 
+&lt;strong&gt;How to scale?&lt;/strong&gt; sequence models can memories 10-500 thousands words. 
 
 ---
 
@@ -487,7 +487,7 @@ class: inverse, center, middle
     
 &lt;br&gt;
     
-First a vocabluary dictionary
+First a vocabulary dictionary
 
 &lt;table class="table table-striped" style="margin-left: auto; margin-right: auto;"&gt;
 &lt;caption&gt;Sample Data  &lt;br&gt;&lt;br&gt;
@@ -621,7 +621,7 @@ and padding to get fixed size input
 
 
 * word2vec &lt;a name=cite-mikolov2013efficient&gt;&lt;/a&gt;([Mikolov, Chen, Corrado, and Dean, 2013](#bib-mikolov2013efficient))
-* Dense represenation of discrete voacb.
+* Dense representation of discrete vocab.
 * Nowadays integrated + optimized by global loss.
 
 
@@ -632,7 +632,7 @@ and padding to get fixed size input
 
 * Learns arbitrarily long sequential patterns
 * Can be performed bidirectional
-* Able to forget noisy fetaures
+* Able to forget noisy features
 * Extensions: 
     + long short-term memory (LSTM) and 
     + gated recurrent unit (GRU)
@@ -649,7 +649,7 @@ and padding to get fixed size input
     + &lt;a name=cite-kalchbrenner2014convolutional&gt;&lt;/a&gt;([Kalchbrenner, Grefenstette, and Blunsom, 2014](#bib-kalchbrenner2014convolutional)) 
     + &lt;a name=cite-kim2014convolutional&gt;&lt;/a&gt;([Kim, 2014](#bib-kim2014convolutional))
 * Interprets each token as real valued pixel
-* Local adaptive filters are pooling the spatial dependcies of words (1D)
+* Local adaptive filters are pooling the spatial dependencies of words (1D)
 * Can be parallelized (speed up)
 
 ---
@@ -1008,10 +1008,10 @@ class: inverse, center, middle
 
 * Bag of words models
 * Provide pre-trained models as package (voteornot)
-* Incorporate setiment measures
+* Incorporate sentiment measures
 
 &lt;!-- * though NLP seems to be doing pretty well with BERT and friends these days, quite likely owing to the more deliberate nature of text, and a higher signal to noise ratio). --&gt;
-&lt;!-- * PageRank for finding influencer -&gt; missinformation? --&gt;
+&lt;!-- * PageRank for finding influencer -&gt; misinformation? --&gt;
 &lt;!-- * Conover et al. (2012) use Twitter messages to develop political information diffusion networks, and use those networks to predict the political alignment of Twitter users. --&gt;
 &lt;!-- * Conover et al. (2012) used hashtags as a basis of predicting the political alignment of Twitter --&gt;
 &lt;!-- users, ultimately predicting political affiliations at a 91% accuracy rate. --&gt;
@@ -1108,7 +1108,9 @@ preprint arXiv:1301.3781_.
 
 --- 
 
+
 ### Benchmarks 
+
 
 * Predict party affiliation and voting propensity based on socio-demographic data
 * Outcomes (colored) are used mutually as covariates
@@ -1135,46 +1137,10 @@ preprint arXiv:1301.3781_.
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:center;color: red !important;"&gt; 0.25 &lt;/td&gt;
-   &lt;td style="text-align:center;color: blue !important;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 30.05 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:center;color: red !important;"&gt; 1.46 &lt;/td&gt;
-   &lt;td style="text-align:center;color: blue !important;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 47.54 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:center;color: red !important;"&gt; -1.39 &lt;/td&gt;
-   &lt;td style="text-align:center;color: blue !important;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 50.47 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:center;color: red !important;"&gt; -1.44 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; -0.66 &lt;/td&gt;
    &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 21.83 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 22.32 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
@@ -1183,9 +1149,21 @@ preprint arXiv:1301.3781_.
    &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:center;color: red !important;"&gt; 0.98 &lt;/td&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 1.00 &lt;/td&gt;
    &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 32.95 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 50.18 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0.11 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 67.67 &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
@@ -1193,6 +1171,30 @@ preprint arXiv:1301.3781_.
    &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
    &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; -0.23 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 34.61 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: red !important;"&gt; 0.64 &lt;/td&gt;
+   &lt;td style="text-align:center;color: blue !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 43.76 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
